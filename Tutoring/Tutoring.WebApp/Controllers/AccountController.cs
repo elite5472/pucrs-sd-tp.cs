@@ -9,7 +9,9 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using Tutoring.WebApp.Models;
+using Tutoring.WebApp.Models.Account;
 using Tutoring.WebApp.BusinessRules;
+using System.Security;
 
 namespace Tutoring.WebApp.Controllers
 {
@@ -52,6 +54,76 @@ namespace Tutoring.WebApp.Controllers
                 _userManager = value;
             }
         }
+
+		[AccessPolicy(AccessPermissions.ACCOUNT_SHOW)]
+		public ActionResult Show(string id)
+		{
+			ShowViewModel model = new ShowViewModel();
+
+			using(var context = new TutoringContext())
+			{
+				model.Person = context.People.FirstOrDefault(x => x.PucrsId == id);
+				if (model.Person == null)
+					return HttpNotFound();
+			}
+
+			return View(model);
+		}
+
+		[HttpGet]
+		[AccessPolicy(AccessPermissions.ACCOUNT_MANAGE)]
+		public ActionResult Manage()
+		{
+			ManageViewModel model = new ManageViewModel();
+			string usr_handle = User.Identity.GetUserName();
+
+			using(var context = new TutoringContext())
+			{
+				Person user = context.People.First(x => x.PucrsId == usr_handle);
+				model.Users = context.People
+					.ToList()
+					.Where(x => UserTypeAccessLevel.GetAccessLevel(x.UserType) < UserTypeAccessLevel.GetAccessLevel(user.UserType))
+					.OrderBy(x => x.PucrsId)
+					.ToList();
+
+				model.UserTypes = UserTypeAccessLevel.UserTypes
+					.Where(x => x.Value < UserTypeAccessLevel.GetAccessLevel(user.UserType))
+					.Select(x => x.Key)
+					.ToList();
+			}
+
+
+			return View(model);
+		}
+
+		[HttpPost]
+		[AccessPolicy(AccessPermissions.ACCOUNT_MANAGE)]
+		public ActionResult Manage(ManageViewModel model)
+		{
+			using(var context = new TutoringContext())
+			{
+				string usr_handle = User.Identity.GetUserName();
+				Person user = context.People.First(x => x.PucrsId == usr_handle);
+				var usr_types = model.Users.ToDictionary(k => k.PucrsId, v => v.UserType);
+				foreach (var usr_type in usr_types)
+				{
+					Person target = context.People.FirstOrDefault(x => x.PucrsId == usr_type.Key);
+					if (target == null) continue;
+
+					if (UserTypeAccessLevel.GetAccessLevel(target.UserType) >= UserTypeAccessLevel.GetAccessLevel(user.UserType))
+						throw new SecurityException();
+
+					if (usr_type.Value != target.UserType)
+					{
+						target.UserType = usr_type.Value;
+					}
+				}
+				context.SaveChanges();
+			}
+			return Manage();
+		}
+
+		
 
         //
         // GET: /Account/Login
@@ -97,10 +169,20 @@ namespace Tutoring.WebApp.Controllers
         [AllowAnonymous]
         public ActionResult Register()
         {
-			var current_user = UserManager.FindById(User.Identity.GetUserId());
-			RegisterViewModel model = new RegisterViewModel();
+			string msg = "Create a new " + UserTypeAccessLevel.DefaultRegisterType + " account.";
+			int highest_access = UserTypeAccessLevel.UserTypes.Max(x => x.Value);
+			string highest_type = UserTypeAccessLevel.UserTypes.Where(x => x.Value == highest_access).First().Key;
+			using (var context = new ApplicationDbContext())
+			{
+				if (context.Users.Count() == 0)
+				{
+					msg = "Create a " + highest_type + " account to set up the application.";
+				}
+			}
+
+			RegisterViewModel model = new RegisterViewModel() { Message = msg };
 			
-            return View();
+            return View(model);
         }
 
         //
@@ -110,20 +192,43 @@ namespace Tutoring.WebApp.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Register(RegisterViewModel model)
         {
+			string usr_type = UserTypeAccessLevel.DefaultRegisterType;
+			using (var context = new ApplicationDbContext())
+			{
+				if (context.Users.Count() == 0)
+				{
+					int highest_access = UserTypeAccessLevel.UserTypes.Max(x => x.Value);
+					string highest_type = UserTypeAccessLevel.UserTypes.Where(x => x.Value == highest_access).First().Key;
+					usr_type = highest_type;
+				}
+			}
+
             if (ModelState.IsValid)
             {
+				Person person = new Person
+				{
+					Name = model.Name,
+					PucrsId = model.PucrsId,
+					UserType = usr_type,
+					Email = model.Email
+				};
                 var user = new ApplicationUser
 				{ 
 					UserName = model.PucrsId, 
-					Name = model.Name,
 					Email = model.Email,
-					PucrsId = model.PucrsId,
-					UserType = UserTypeAccessLevel.DefaultRegisterType
 				};
+
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
                     await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
+
+					using(var context = new TutoringContext())
+					{
+						context.People.Add(person);
+						context.SaveChanges();
+					}
+
                     return RedirectToAction("Index", "Home");
                 }
                 AddErrors(result);

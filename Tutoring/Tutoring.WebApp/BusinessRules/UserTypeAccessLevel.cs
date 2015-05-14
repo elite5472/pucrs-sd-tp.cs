@@ -7,16 +7,29 @@ namespace Tutoring.WebApp.BusinessRules
 {
 	public class UserTypeAccessLevel
 	{
+		private static Dictionary<string, int> _UserTypes = new Dictionary<string, int>
+		{
+			{"Student", 1},
+			{"Professor", 2},
+			{"Staff", 3},
+			{"Director", 4}
+		};
+
+		public static Dictionary<string, int> UserTypes
+		{
+			get
+			{
+				return _UserTypes;
+			}
+		}
+
 		public static int GetAccessLevel(string user_type)
 		{
-			switch(user_type)
-			{
-				case "Student": return 1;
-				case "Professor": return 2;
-				case "Staff": return 3;
-				case "Director": return 4;
-				default: return 0;
-			}
+			if (UserTypes.ContainsKey(user_type))
+				return UserTypes[user_type];
+			else
+				return 0;
+
 		}
 
 		public static bool CheckPromoteRights(string user_type, string target_type)

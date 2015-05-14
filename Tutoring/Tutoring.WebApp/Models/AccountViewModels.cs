@@ -1,8 +1,25 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
-namespace Tutoring.WebApp.Models
+namespace Tutoring.WebApp.Models.Account
 {
+	public class ShowViewModel
+	{
+		public Person Person { get; set; }
+	}
+
+	public class ManageViewModel
+	{
+		public List<Person> Users { get; set; }
+		public List<string> UserTypes { get; set; }
+
+		public ManageViewModel()
+		{
+			Users = new List<Person>();
+			UserTypes = new List<string>();
+		}
+	}
+
     public class LoginViewModel
     {
         [Required]
@@ -20,6 +37,8 @@ namespace Tutoring.WebApp.Models
 
     public class RegisterViewModel
     {
+		public string Message { get; set; }
+
 		[Required]
 		[Display(Name = "Name")]
 		public string Name { get; set; }

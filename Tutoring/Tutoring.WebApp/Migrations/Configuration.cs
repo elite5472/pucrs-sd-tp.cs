@@ -17,15 +17,7 @@ namespace Tutoring.WebApp.Migrations
 
         protected override void Seed(Tutoring.WebApp.Models.ApplicationDbContext context)
         {
-			var manager = new UserManager<ApplicationUser>(
-				new UserStore<ApplicationUser>(
-					new ApplicationDbContext()));
 
-				var user = new ApplicationUser()
-				{
-					UserName = "111804993", Email = "guiborges@live.com", Name = "Guillermo Borges", PucrsId = "111804993", UserType = "Director"
-				};
-				manager.Create(user, "@Password123");
         }
     }
 }
