@@ -40,3 +40,5 @@ C:\Users\Guillermo\OneDrive\Dev\pucrs-sd-tp.cs\Tutoring\Tutoring.WebApp.Tests\bi
 C:\Users\Guillermo\OneDrive\Dev\pucrs-sd-tp.cs\Tutoring\Tutoring.WebApp.Tests\obj\Debug\Tutoring.WebApp.Tests.csprojResolveAssemblyReference.cache
 C:\Users\Guillermo\OneDrive\Dev\pucrs-sd-tp.cs\Tutoring\Tutoring.WebApp.Tests\obj\Debug\Tutoring.WebApp.Tests.dll
 C:\Users\Guillermo\OneDrive\Dev\pucrs-sd-tp.cs\Tutoring\Tutoring.WebApp.Tests\obj\Debug\Tutoring.WebApp.Tests.pdb
+C:\Users\Guillermo\OneDrive\Dev\pucrs-sd-tp.cs\Tutoring\Tutoring.WebApp.Tests\bin\Debug\Tutoring.WebApp.Tests.dll.CodeAnalysisLog.xml
+C:\Users\Guillermo\OneDrive\Dev\pucrs-sd-tp.cs\Tutoring\Tutoring.WebApp.Tests\bin\Debug\Tutoring.WebApp.Tests.dll.lastcodeanalysissucceeded
