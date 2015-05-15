@@ -20,7 +20,7 @@
 			user = Model.Users[i];
 			<tr>
 				<td>@user.PucrsId</td>
-				<td>@user.Name</td>
+				<td><a href="@Url.Action("Show", new { id = @user.PucrsId })">@user.Name</a></td>
 				<td>@Html.DropDownListFor(m => m.Users[i].UserType, new SelectList(Model.UserTypes, user.UserType))</td>
 				@Html.HiddenFor(m => m.Users[i].PucrsId)
 				@Html.HiddenFor(m => m.Users[i].Name)

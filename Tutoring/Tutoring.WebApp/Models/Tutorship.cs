@@ -7,7 +7,7 @@ namespace Tutoring.WebApp.Models
 {
 	public class Tutorship
 	{
-		public int Id { get; set; }
+		public int TutorshipId { get; set; }
 
 		public int ClassId { get; set; }
 		public Class Class { get; set; }

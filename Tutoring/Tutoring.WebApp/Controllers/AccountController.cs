@@ -83,7 +83,8 @@ namespace Tutoring.WebApp.Controllers
 				model.Users = context.People
 					.ToList()
 					.Where(x => UserTypeAccessLevel.GetAccessLevel(x.UserType) < UserTypeAccessLevel.GetAccessLevel(user.UserType))
-					.OrderBy(x => x.PucrsId)
+					.OrderBy(x => x.UserType)
+					.ThenBy(x => x.Name)
 					.ToList();
 
 				model.UserTypes = UserTypeAccessLevel.UserTypes

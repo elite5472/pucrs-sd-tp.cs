@@ -1,0 +1,50 @@
+﻿@using Tutoring.WebApp.Models
+@using Tutoring.WebApp.BusinessRules
+@model List<Tutorship>
+
+@if(Model.Count > 0)
+{
+	List<Tutorship> current = Model.Where(x => x.Approved == true).ToList();
+	List<Tutorship> previous = Model.Where(x => x.Approved == false).ToList();
+	
+	if(current.Count > 0)
+	{
+		<h4>Currently Tutoring:</h4>
+		foreach (var t in current)
+		{
+			<div class="panel panel-success">
+				<div class="panel-heading">
+					<h3 class="panel-title">@t.Class.Name [@(t.Class.Code)]</h3>
+				</div>
+				<ul class="list-group">
+					<li class="list-group-item">Professor: <a href="@Url.Action("Show", "Account", new { id = t.Class.Professor.PucrsId })">@t.Class.Professor.Name</a></li>
+					<li class="list-group-item">About:
+						<br />
+						<br />
+						@Html.Raw(TutorshipRules.FormatAbout(t.About))
+					</li>
+				</ul>
+			</div>
+		}
+	}
+	if (previous.Count > 0)
+	{
+		<h4>Previously Tutored:</h4>
+		foreach (var t in previous)
+		{
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<h3 class="panel-title">@t.Class.Name [@(t.Class.Code)]</h3>
+				</div>
+				<ul class="list-group">
+					<li class="list-group-item">Professor: <a href="@Url.Action("Show", "Account", new { id = t.Class.Professor.PucrsId })">@t.Class.Professor.Name</a></li>
+					<li class="list-group-item">About:
+						<br />
+						<br />
+						@Html.Raw(TutorshipRules.FormatAbout(t.About))
+					</li>
+				</ul>
+			</div>
+		}
+	}
+}

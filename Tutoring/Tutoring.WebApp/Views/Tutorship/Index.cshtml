@@ -1,4 +1,5 @@
 ﻿@using Tutoring.WebApp.Models
+@using Tutoring.WebApp.BusinessRules
 @model Tutoring.WebApp.Models.TutorshipViewModels.IndexViewModel
 @{
 	ViewBag.Title = "Classes - Index";
@@ -7,7 +8,7 @@
 <h2><span>Tutorships</span>
 @if (Model.Class != null)
 {
-	<span>- [@(Model.Class.Code)] @Model.Class.Name</span>
+	<span>- @Model.Class.Name [@(Model.Class.Code)]</span>
 }
 @if (Model.Filter != null)
 {
@@ -17,13 +18,19 @@
 
 <div class="panel panel-default">
 	<table class="table">
-		<tr><th>Date</th><th>Status</th><th>About</th><th>Tutor</th><th>Actions</th></tr>
+		<tr>
+			<th>Date</th>
+			<th>Status</th>
+			<th>About</th>
+			<th>Tutor</th>
+			<th>Actions</th>
+		</tr>
 		@foreach (var t in Model.Tutorships.OrderBy(x => Model.GetStatus(x)))
 		{
 			<tr>
 				<td>@t.DateRequested.ToString("d")</td>
 				<td>@Model.GetStatus(t)</td>
-				<td>@t.About</td>
+				<td>@TutorshipRules.ShortAbout(t.About)</td>
 				<td>
 					@if(t.Tutor != null)
 					{
@@ -32,6 +39,7 @@
 				</td>
 				<td>
 					<div class="btn-group" role="group" aria-label="...">
+						<a href="@Url.Action("Show", new { id = t.TutorshipId })" class="btn btn-default">View</a>
 						@if (Model.CanApply)
 						{
 							<a href="" class="btn btn-default">Apply</a>

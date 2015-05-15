@@ -3,24 +3,25 @@
 }
 
 <div class="jumbotron">
-    <h1>PUCRS - Tutoring</h1>
-    <p class="lead">This webapp allows students to apply to tutoring, as well as to seek out tutors for help.</p>
-    <p><a href="" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>
+    <h1>Admin Panel</h1>
+    <p class="lead">From this menu you can manage the website's opperation.</p>
+    <p><a href="@Url.Action("Index","Class")" class="btn btn-primary btn-lg">Manage Classes &raquo;</a></p>
 </div>
 
 <div class="row">
     <div class="col-md-4">
-        <h2>Class Listing</h2>
-        <p><a class="btn btn-default" href="@Url.Action("Index", "Class")">Go &raquo;</a></p>
+        <h2>Manage Tutorships</h2>
+        <p><a class="btn btn-default" href="@Url.Action("Index", "Tutorship")">Go &raquo;</a></p>
     </div>
     <div class="col-md-4">
-        <h2>More Options</h2>
-        <p>Stuff.</p>
-        <p><a class="btn btn-default" href="@Url.Action("Manage", "Account")">Change Account Credentials &raquo;</a></p>
+        <h2>Manage Users</h2>
+        <p><a class="btn btn-default" href="@Url.Action("Manage", "Account")">Go &raquo;</a></p>
     </div>
     <div class="col-md-4">
-        <h2>Another Panel</h2>
-        <p>Stuff</p>
-        <p><a class="btn btn-default" href="">Learn more &raquo;</a></p>
+        <h2>Credits</h2>
+        <p>Guillermo Carvalho Borges - Architect, Developer</p>
+		<p>Caio Steglich Borges - Project Manager, Analyst</p>
+		<p>Daniel Barcellos - Analyst, Tester</p>
+        <p><a class="btn btn-success" href="https://github.com/elite5472/pucrs-sd-tp.cs">Fork at Github &raquo;</a></p>
     </div>
 </div>

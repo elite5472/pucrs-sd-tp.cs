@@ -1,13 +1,21 @@
 ﻿@using Microsoft.AspNet.Identity
+@using Tutoring.WebApp.Models
 @if (Request.IsAuthenticated)
 {
+	Person user = null;
+	using (var context = new TutoringContext())
+	{
+		string user_token = User.Identity.GetUserName();
+		user = context.People.First(x => x.PucrsId == user_token);
+	}
+	
     using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
     {
     @Html.AntiForgeryToken()
 
     <ul class="nav navbar-nav navbar-right">
         <li>
-            @Html.ActionLink(User.Identity.GetUserName(), "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })
+            <a href="@Url.Action("Show", "Account", new { id = user.PucrsId })">@user.Name</a>
         </li>
         <li><a href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>
     </ul>

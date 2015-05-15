@@ -14,7 +14,8 @@ namespace Tutoring.WebApp.BusinessRules
 		public const int TUTORING_APPROVE = 4;
 		public const int TUTORING_DENY = 4;
 		public const int CLASS_INDEX = 1;
-		public const int CLASS_EDIT = 3;
+		public const int CLASS_EDIT = 4;
+		public const int CLASS_DELETE = 4;
 		public const int ACCOUNT_SHOW = 1;
 		public const int ACCOUNT_MANAGE = 3;
 	}

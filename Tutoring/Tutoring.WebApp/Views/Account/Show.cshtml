@@ -3,7 +3,7 @@
     ViewBag.Title = Model.Person.Name;
 }
 <br />
-<div class="panel panel-default">
+<div class="panel panel-primary">
 	<div class="panel-heading">
 		<h3 class="panel-title">@Model.Person.Name - @Model.Person.UserType</h3>
 	</div>
@@ -12,3 +12,5 @@
 		<li class="list-group-item">e-mail: @Model.Person.Email</li>
 	</ul>
 </div>
+
+@{Html.RenderAction("TutorHistoryPartial", "Tutorship", new { id = Model.Person.PucrsId });}

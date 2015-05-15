@@ -28,6 +28,29 @@ namespace Tutoring.WebApp.Models.TutorshipViewModels
 				return "Denied";
 		}
 	}
+	
+	public class ShowViewModel
+	{
+		public Tutorship Tutorship { get; set; }
+
+		public bool CanApprove { get; set; }
+		public bool CanDeny { get; set; }
+		public bool CanApply { get; set; }
+		public bool CanSubscribe { get; set; }
+
+		public bool ShowApplicants { get; set; }
+		public bool ShowSubscribers { get; set; }
+
+		public string GetStatus(Tutorship t)
+		{
+			if (t.Approved)
+				return "Approved";
+			if (t.Seeking)
+				return "Requested";
+			else
+				return "Denied";
+		}
+	}
 
 	public class PetitionViewModel
 	{

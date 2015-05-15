@@ -1,0 +1,106 @@
+﻿@using Tutoring.WebApp.Models
+@using Tutoring.WebApp.BusinessRules
+@model Tutoring.WebApp.Models.TutorshipViewModels.ShowViewModel
+@{
+	ViewBag.Title = "Classes - Index";
+}
+
+<br />
+<div class="panel panel-primary">
+	<div class="panel-heading">
+		<h3 class="panel-title">Tutorship for @Model.Tutorship.Class.Name [@(Model.Tutorship.Class.Code)]</h3>
+	</div>
+	<ul class="list-group">
+		<li class="list-group-item">Professor: <a href="@Url.Action("Show", "Account", new { id = Model.Tutorship.Class.Professor.PucrsId })">@Model.Tutorship.Class.Professor.Name</a></li>
+		<li class="list-group-item">
+			<span>Tutor: </span>
+			@if (Model.Tutorship.Tutor != null)
+			{
+				<a href="@Url.Action("Show", "Account", new { id = Model.Tutorship.Tutor.PucrsId })">@Model.Tutorship.Tutor.Name</a>
+			}
+			else
+			{
+				<span>To be decided.</span>
+			}
+		</li>
+		<li class="list-group-item">Date Requested: @Model.Tutorship.DateRequested.ToString("d")</li>
+		<li class="list-group-item">Status: @Model.GetStatus(Model.Tutorship)</li>
+		<li class="list-group-item">About:
+			<br />
+			<br />
+			@Html.Raw(TutorshipRules.FormatAbout(Model.Tutorship.About))
+		</li>
+	</ul>
+</div>
+@if(Model.ShowApplicants)
+{
+	<div class="panel panel-default">
+		<div class="panel-heading">
+			<h3 class="panel-title">
+				Applicants
+			</h3>
+		</div>
+
+		@if(Model.CanApprove)
+		{
+			<table class="table">
+			@foreach (var x in Model.Tutorship.Applicants)
+			{
+				<tr>
+					<td><a href="@Url.Action("Show", "Account", new { id = x.PucrsId })">@x.Name</a></td>
+					<td><a href="@Url.Action("Approve", new { tutorship_id = Model.Tutorship.TutorshipId, user_id = x.PucrsId})" class="btn btn-success">Approve</a></td>
+				</tr>
+			}
+			</table>
+		}
+		else
+		{
+			<ul class="list-group">
+				@foreach (var x in Model.Tutorship.Applicants)
+				{
+					<li class="list-group-item">
+						<a href="@Url.Action("Show", "Account", new { id = x.PucrsId })">@x.Name</a>
+					</li>
+				}
+			</ul>
+		}
+	</div>
+}
+
+@if (Model.ShowSubscribers)
+{
+	<div class="panel panel-default">
+		<div class="panel-heading">
+			<h3 class="panel-title">
+				Subscribers
+			</h3>
+		</div>
+		<ul class="list-group">
+			@foreach (var x in Model.Tutorship.Subscribers)
+			{
+				<li class="list-group-item">
+					<a href="@Url.Action("Show", "Account", new { id = x.PucrsId })">@x.Name</a>
+				</li>
+			}
+		</ul>
+	</div>
+}
+
+@if (Model.CanApply || Model.CanApprove || Model.CanDeny || Model.CanSubscribe)
+{
+	<div class="btn-group" role="group" aria-label="...">
+		@if (Model.CanApply)
+		{
+			<a href="@Url.Action("Apply", new { id = Model.Tutorship.TutorshipId })" class="btn btn-success">Apply</a>
+		}
+		@if (Model.CanSubscribe)
+		{
+			<a href="@Url.Action("Subscribe", new { id = Model.Tutorship.TutorshipId })" class="btn btn-default">Subscribe</a>
+		}
+		@if (Model.CanDeny)
+		{
+			var btn_text = Model.Tutorship.Approved? "Close Tutorship" : "Deny";
+			<a href="@Url.Action("Deny", new { id = Model.Tutorship.TutorshipId })" class="btn btn-danger">@btn_text</a>
+		}
+	</div>
+}
