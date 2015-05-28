@@ -52,3 +52,4 @@ C:\Users\Guillermo\OneDrive\Dev\pucrs-sd-tp.cs\Tutoring\Tutoring.WebApp\bin\Micr
 C:\Users\Guillermo\OneDrive\Dev\pucrs-sd-tp.cs\Tutoring\Tutoring.WebApp\bin\Microsoft.Owin.Security.MicrosoftAccount.xml
 C:\Users\Guillermo\OneDrive\Dev\pucrs-sd-tp.cs\Tutoring\Tutoring.WebApp\obj\Debug\Tutoring.WebApp.dll
 C:\Users\Guillermo\OneDrive\Dev\pucrs-sd-tp.cs\Tutoring\Tutoring.WebApp\obj\Debug\Tutoring.WebApp.pdb
+C:\Users\Guillermo\OneDrive\Dev\pucrs-sd-tp.cs\Tutoring\Tutoring.WebApp\obj\Debug\Tutoring.WebApp.csprojResolveAssemblyReference.cache
