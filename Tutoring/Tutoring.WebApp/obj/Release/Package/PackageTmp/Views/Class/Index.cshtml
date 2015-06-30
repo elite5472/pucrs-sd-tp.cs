@@ -1,0 +1,57 @@
+﻿@using Tutoring.WebApp.Models
+@model Tutoring.WebApp.Models.ClassViewModels.IndexViewModel
+@{
+    ViewBag.Title = "Classes - Index";
+}
+
+@if(Model.Teacher != null)
+{
+	<h2>Classes by @Model.Teacher</h2>
+}
+else
+{
+	<h2>Classes</h2>
+}
+
+<div class="panel panel-default">
+	<table class="table">
+		<tr><th>Code</th><th>Name</th><th>Professor</th><th>Faculty</th><th>Actions</th></tr>
+		@foreach(var c in Model.Classes)
+		{
+			<tr>
+				<td>@c.Code</td>
+				<td>@c.Name</td>
+				<td><a href="@Url.Action("Show", "Account", new { id = c.Professor.PucrsId })">@c.Professor.Name</a></td>
+				<td>@c.Faculty</td>
+				<td>
+					<div class="btn-group" role="group" aria-label="...">
+						<a href="@Url.Action("Index", "Tutorship", new { class_id = c.ClassId })" class="btn btn-default">Tutorships</a>
+						@if (Model.CanRequestTutorship)
+						{
+							<a href="@Url.Action("Request", "Tutorship", new { class_id = c.ClassId })">Request</a>
+						}
+						@if (Model.CanReviewTutorship)
+						{
+							<a href="@Url.Action("Index", "Tutorship", new { class_id = c.ClassId, filter = "requested" })">Review</a>
+						}
+					</div>
+
+					@if (Model.CanEdit)
+					{
+						<div class="btn-group" role="group" aria-label="...">
+							<a href="@Url.Action("Edit", new { id = c.ClassId })" class="btn btn-default">Edit</a>
+						</div>
+					}
+</td>
+			</tr>
+		}
+	</table>
+	@if (Model.CanEdit)
+	{
+		<div class="panel-footer">
+			<div class="btn-group" role="group" aria-label="...">
+				<a href="@Url.Action("Edit")" class="btn btn-default">Create Class</a>
+			</div>
+		</div>
+	}
+</div>

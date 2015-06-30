@@ -8,10 +8,14 @@ namespace Tutoring.WebApp.Models
 {
 	public class TutoringContext : DbContext
 	{
-		public TutoringContext() : base("TutoringConnection") { }
+		public TutoringContext() : base("TutoringConnection")
+		{
+			Database.SetInitializer<TutoringContext>(new DropCreateDatabaseIfModelChanges<TutoringContext>());
+		}
 		public DbSet<Person> People { get; set; }
 		public DbSet<Class> Classes { get; set; }
 		public DbSet<Tutorship> Tutorships { get; set; }
+		public DbSet<AccessLog> AccessLogs { get; set; }
 
 		protected override void OnModelCreating(DbModelBuilder modelBuilder)
 		{

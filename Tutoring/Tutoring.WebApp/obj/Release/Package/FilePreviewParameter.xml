@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<parameters>
+  <parameter name="IIS Web Application Name" description="" value="dstp3" tags="IisApp">
+    <parameterEntry kind="ProviderPath" scope="IisApp" match="^C:\\OneDrive\\Dev\\pucrs-sd-tp\.cs\\Tutoring\\Tutoring\.WebApp\\obj\\Release\\Package\\PackageTmp$" />
+    <parameterEntry kind="ProviderPath" scope="setAcl" match="^C:\\OneDrive\\Dev\\pucrs-sd-tp\.cs\\Tutoring\\Tutoring\.WebApp\\obj\\Release\\Package\\PackageTmp$" />
+  </parameter>
+  <parameter name="DefaultConnection-Web.config Connection String" description="" value="Data Source=GSERVER\SQLEXPRESS;Initial Catalog=TutoringUsers;Integrated Security=True" tags="">
+    <parameterEntry kind="XmlFile" scope="C:\\OneDrive\\Dev\\pucrs-sd-tp\.cs\\Tutoring\\Tutoring\.WebApp\\obj\\Release\\Package\\PackageTmp\\Web\.config$" match="/configuration/connectionStrings/add[@name='DefaultConnection']/@connectionString" />
+  </parameter>
+  <parameter name="TutoringConnection-Web.config Connection String" description="" value="Data Source=GSERVER\SQLEXPRESS;Initial Catalog=Tutoring;Integrated Security=True" tags="">
+    <parameterEntry kind="XmlFile" scope="C:\\OneDrive\\Dev\\pucrs-sd-tp\.cs\\Tutoring\\Tutoring\.WebApp\\obj\\Release\\Package\\PackageTmp\\Web\.config$" match="/configuration/connectionStrings/add[@name='TutoringConnection']/@connectionString" />
+  </parameter>
+</parameters>

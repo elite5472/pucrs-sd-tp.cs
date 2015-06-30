@@ -1,0 +1,47 @@
+﻿@model Tutoring.WebApp.Models.ClassViewModels.EditViewModel
+@{
+	ViewBag.Title = Model.FormType + " Class";
+}
+
+<h2>@ViewBag.Title</h2>
+
+@using (Html.BeginForm("Edit", "Class", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+{
+	<hr/>
+	@Html.ValidationSummary("", new { @class = "text-danger" })
+	@Html.HiddenFor(x => x.FormType)
+	@Html.HiddenFor(x => x.Id)
+	<div class="form-group">
+		@Html.LabelFor(m => m.Name, new { @class = "col-md-2 control-label" })
+		<div class="col-md-10">
+			@Html.TextBoxFor(m => m.Name, new { @class = "form-control" })
+		</div>
+	</div>
+	<div class="form-group">
+		@Html.LabelFor(m => m.Code, new { @class = "col-md-2 control-label" })
+		<div class="col-md-10">
+			@Html.TextBoxFor(m => m.Code, new { @class = "form-control" })
+		</div>
+	</div>
+	<div class="form-group">
+		@Html.LabelFor(m => m.Faculty, new { @class = "col-md-2 control-label" })
+		<div class="col-md-10">
+			@Html.TextBoxFor(m => m.Faculty, new { @class = "form-control" })
+		</div>
+	</div>
+	<div class="form-group">
+		@Html.LabelFor(m => m.TeacherId, new { @class = "col-md-2 control-label" })
+		<div class="col-md-10">
+			@Html.TextBoxFor(m => m.TeacherId, new { @class = "form-control" })
+		</div>
+	</div>
+	<div class="form-group">
+		<div class="col-md-offset-2 col-md-10">
+			<input type="submit" class="btn btn-default" value="Register" />
+		</div>
+	</div>
+}
+
+@section Scripts {
+	@Scripts.Render("~/bundles/jqueryval")
+}

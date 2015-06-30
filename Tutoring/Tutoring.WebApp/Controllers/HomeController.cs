@@ -24,6 +24,14 @@ namespace Tutoring.WebApp.Controllers
 				string user_token = User.Identity.GetUserName();
 				Person user = context.People.First(x => x.PucrsId == user_token);
 
+				AccessLog log = new AccessLog();
+				log.Person = user;
+				log.PersonId = user.PersonId;
+				log.AccessDate = DateTime.Now;
+
+				context.AccessLogs.Add(log);
+				context.SaveChanges();
+
 				if (user.UserType == "Student")
 					return RedirectToAction("Index", "Class");
 

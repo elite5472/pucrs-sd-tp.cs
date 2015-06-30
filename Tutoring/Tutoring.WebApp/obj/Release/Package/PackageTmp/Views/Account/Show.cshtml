@@ -1,0 +1,16 @@
+﻿@model Tutoring.WebApp.Models.Account.ShowViewModel
+@{
+    ViewBag.Title = Model.Person.Name;
+}
+<br />
+<div class="panel panel-primary">
+	<div class="panel-heading">
+		<h3 class="panel-title">@Model.Person.Name - @Model.Person.UserType</h3>
+	</div>
+	<ul class="list-group">
+		<li class="list-group-item">PUCRS ID: @Model.Person.PucrsId</li>
+		<li class="list-group-item">e-mail: @Model.Person.Email</li>
+	</ul>
+</div>
+
+@{Html.RenderAction("TutorHistoryPartial", "Tutorship", new { id = Model.Person.PucrsId });}

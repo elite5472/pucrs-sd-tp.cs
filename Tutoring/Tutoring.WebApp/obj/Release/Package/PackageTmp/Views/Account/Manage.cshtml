@@ -1,0 +1,34 @@
+﻿@using Tutoring.WebApp.Models
+@model Tutoring.WebApp.Models.Account.ManageViewModel
+@{
+    ViewBag.Title = "Change User Credentials";
+	Person user;
+}
+
+<h2>Change User Credentials</h2>
+
+<div class="panel panel-default">
+	<div class="panel-body">
+		<p>Below you can change the credentials for each user.</p>
+	</div>
+	@using (Html.BeginForm("Manage", "Account", FormMethod.Post))
+    {
+		<table class="table">
+			<tr><th>PUCRS ID</th><th>Name</th><th>Credential</th></tr>
+		@for(int i = 0; i < Model.Users.Count; i++)
+		{
+			user = Model.Users[i];
+			<tr>
+				<td>@user.PucrsId</td>
+				<td><a href="@Url.Action("Show", new { id = @user.PucrsId })">@user.Name</a></td>
+				<td>@Html.DropDownListFor(m => m.Users[i].UserType, new SelectList(Model.UserTypes, user.UserType))</td>
+				@Html.HiddenFor(m => m.Users[i].PucrsId)
+				@Html.HiddenFor(m => m.Users[i].Name)
+			</tr>
+		}	
+		</table>
+		<div class="panel-body">
+			<input type="submit" value="Save" class="btn btn-default" />
+		</div>
+	}
+</div>

@@ -1,0 +1,72 @@
+﻿@using Tutoring.WebApp.Models
+@using Tutoring.WebApp.BusinessRules
+@model Tutoring.WebApp.Models.TutorshipViewModels.IndexViewModel
+@{
+	ViewBag.Title = "Classes - Index";
+}
+
+<h2><span>Tutorships</span>
+@if (Model.Class != null)
+{
+	<span>- @Model.Class.Name [@(Model.Class.Code)]</span>
+}
+@if (Model.Filter != null)
+{
+	<span>- @Model.Filter</span>
+}	
+</h2>
+
+<div class="panel panel-default">
+	<table class="table">
+		<tr>
+			<th>Date</th>
+			<th>Status</th>
+			<th>About</th>
+			<th>Tutor</th>
+			<th>Actions</th>
+		</tr>
+		@foreach (var t in Model.Tutorships.OrderBy(x => Model.GetStatus(x)))
+		{
+			<tr>
+				<td>@t.DateRequested.ToString("d")</td>
+				<td>@Model.GetStatus(t)</td>
+				<td>@TutorshipRules.ShortAbout(t.About)</td>
+				<td>
+					@if(t.Tutor != null)
+					{
+						<a href="@Url.Action("Show", "Account", new { id = t.Tutor.PucrsId })">@t.Tutor.Name</a>
+					}
+				</td>
+				<td>
+					<div class="btn-group" role="group" aria-label="...">
+						<a href="@Url.Action("Show", new { id = t.TutorshipId })" class="btn btn-default">View</a>
+						@if (Model.CanApply)
+						{
+							<a href="" class="btn btn-default">Apply</a>
+						}
+						@if (Model.CanSubscribe)
+						{
+							<a href="" class="btn btn-default">Subscribe</a>
+						}
+						@if (Model.CanApprove)
+						{
+							<a href="" class="btn btn-default">Approve</a>
+						}
+						@if (Model.CanDeny)
+						{
+							<a href="" class="btn btn-default">Deny</a>
+						}
+					</div>
+				</td>
+			</tr>
+		}
+	</table>
+	@if (Model.CanRequest && Model.Class != null)
+	{
+		<div class="panel-footer">
+			<div class="btn-group" role="group" aria-label="...">
+				<a href="@Url.Action("Petition", new { class_id = Model.Class.ClassId })" class="btn btn-default">Request Tutorship</a>
+			</div>
+		</div>
+	}
+</div>
